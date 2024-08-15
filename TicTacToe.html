@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tic Tac Toe</title>
+  <link rel="stylesheet" href="TicTacToe.css">
+</head>
+<body>
+  <div class="game">
+    <div class="text">
+    <h1>Tic Tac Toe</h1>
+    </div>
+
+  <div class="container">
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <div class="cell"></div>
+    <button onclick="resetGame()">New Game</button>
+
+  </div>
+
+  </div>
+  <script>
+    const cells = document.querySelectorAll('.cell');
+    let currentPlayer = 'X';
+
+    function checkForWinner() {
+      const lines = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+      ];
+
+      for (let i = 0; i < lines.length; i++) {
+        const [a, b, c] = lines[i];
+        if (cells[a].classList.contains(currentPlayer) &&
+            cells[b].classList.contains(currentPlayer) &&
+            cells[c].classList.contains(currentPlayer)) {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    cells.forEach(cell => {
+      cell.addEventListener('click', () => {
+        cell.textContent = currentPlayer;
+        cell.classList.add(currentPlayer);
+        if (checkForWinner()) {
+          alert(`${currentPlayer} wins!`);
+          resetGame();
+        } else {
+          currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        }
+      });
+    });
+
+    function resetGame() {
+      cells.forEach(cell => {
+        cell.textContent = '';
+        cell.classList.remove('X', 'O');
+      });
+      currentPlayer = 'X';
+    }
+  </script>
+</body>
+</html>
